@@ -2,16 +2,23 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-
+// --- LOGIKA ANTI-CRASH VERCEL ---
+// Cek apakah sedang di Vercel?
 const isVercel = process.env.VERCEL === '1';
 
-
+// Jika di Vercel, simpan di /tmp (Boleh tulis).
+// Jika di Laptop, simpan di folder uploads biasa.
 const uploadDirectory = isVercel 
   ? path.join('/tmp', 'uploads', 'avatars') 
   : path.join(process.cwd(), 'uploads', 'avatars');
 
+// Buat folder jika belum ada (PENTING: Pakai recursive true)
 if (!fs.existsSync(uploadDirectory)) {
-  fs.mkdirSync(uploadDirectory, { recursive: true });
+  try {
+    fs.mkdirSync(uploadDirectory, { recursive: true });
+  } catch (error) {
+    console.error("Gagal membuat folder upload:", error);
+  }
 }
 
 const storage = multer.diskStorage({
