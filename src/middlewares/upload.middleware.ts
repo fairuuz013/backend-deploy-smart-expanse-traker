@@ -3,16 +3,14 @@ import path from 'path';
 import fs from 'fs';
 
 // --- LOGIKA ANTI-CRASH VERCEL ---
-// Cek apakah sedang di Vercel?
 const isVercel = process.env.VERCEL === '1';
 
-// Jika di Vercel, simpan di /tmp (Boleh tulis).
-// Jika di Laptop, simpan di folder uploads biasa.
+// Tentukan lokasi: /tmp untuk Vercel, uploads/ untuk laptop
 const uploadDirectory = isVercel 
   ? path.join('/tmp', 'uploads', 'avatars') 
   : path.join(process.cwd(), 'uploads', 'avatars');
 
-// Buat folder jika belum ada (PENTING: Pakai recursive true)
+// Buat folder jika belum ada
 if (!fs.existsSync(uploadDirectory)) {
   try {
     fs.mkdirSync(uploadDirectory, { recursive: true });
@@ -39,7 +37,7 @@ const fileFilter = (_req: any, file: any, cb: any) => {
   }
 };
 
-export const upload = multer({ 
+export const uploadAvatar = multer({ 
   storage: storage,
   fileFilter: fileFilter,
   limits: { fileSize: 2 * 1024 * 1024 } // 2MB
