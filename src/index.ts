@@ -1,5 +1,5 @@
 // backend/src/index.ts
-import app from "./app";
+import app from "./app.js";
 import os from 'os';
 import config from './utils/env';
 
