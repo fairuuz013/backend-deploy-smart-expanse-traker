@@ -1,5 +1,5 @@
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { AuthService } from "../services/auth.service.js";
+import { asyncHandler } from '../utils/asyncHandler.js';
+import { AuthService } from '../services/auth.service.js';
 export class AuthController {
     authService;
     constructor() {
@@ -8,13 +8,13 @@ export class AuthController {
     // 1. REGISTER — Request OTP
     register = asyncHandler(async (req, res) => {
         const { email } = req.body;
-        if (process.env.NODE_ENV === "development") {
-            console.log("[auth] register request", { email, from: req.ip });
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[auth] register request', { email, from: req.ip });
         }
         const result = await this.authService.registerUser(req.body);
         res.status(200).json({
             success: true,
-            message: "Kode OTP telah dikirim ke email anda",
+            message: 'Kode OTP telah dikirim ke email anda',
             data: result,
         });
     });
@@ -24,39 +24,39 @@ export class AuthController {
         // Accept either `code` (legacy) or `otpCode` (newer clients)
         const code = req.body.code ?? req.body.otpCode;
         if (!email || !code) {
-            throw new Error("Email dan kode OTP wajib diisi");
+            throw new Error('Email dan kode OTP wajib diisi');
         }
-        if (process.env.NODE_ENV === "development") {
-            console.log("[auth] verify otp", { email });
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[auth] verify otp', { email });
         }
         const newUser = await this.authService.verifyRegistration(email, code);
         res.status(201).json({
             success: true,
-            message: "Registrasi berhasil, akun anda telah aktif",
+            message: 'Registrasi berhasil, akun anda telah aktif',
             data: newUser,
         });
     });
     // 3. LOGIN
     login = asyncHandler(async (req, res) => {
         const { email } = req.body;
-        if (process.env.NODE_ENV === "development") {
-            console.log("[auth] login attempt", { email });
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[auth] login attempt', { email });
         }
         const loginResult = await this.authService.loginUser(req.body);
         res.status(200).json({
             success: true,
-            message: "Login berhasil",
+            message: 'Login berhasil',
             data: loginResult,
         });
     });
     // 4. ME
     me = asyncHandler(async (req, res) => {
         if (!req.user) {
-            throw new Error("Unauthorized");
+            throw new Error('Unauthorized');
         }
         res.status(200).json({
             success: true,
-            message: "Data profile berhasil diambil",
+            message: 'Data profile berhasil diambil',
             data: req.user,
         });
     });
@@ -64,12 +64,12 @@ export class AuthController {
     resendOtp = asyncHandler(async (req, res) => {
         const { email } = req.body;
         if (!email) {
-            throw new Error("Email wajib diisi");
+            throw new Error('Email wajib diisi');
         }
         const result = await this.authService.resendOtp(email);
         res.status(200).json({
             success: true,
-            message: "Kode OTP baru telah dikirim",
+            message: 'Kode OTP baru telah dikirim',
             data: result,
         });
     });
@@ -77,12 +77,12 @@ export class AuthController {
     forgotPassword = asyncHandler(async (req, res) => {
         const { email } = req.body;
         if (!email) {
-            throw new Error("Email wajib diisi");
+            throw new Error('Email wajib diisi');
         }
         const result = await this.authService.requestPasswordReset(email);
         res.status(200).json({
             success: true,
-            message: "Instruksi reset password telah dikirim ke email",
+            message: 'Instruksi reset password telah dikirim ke email',
             data: result,
         });
     });
@@ -91,7 +91,7 @@ export class AuthController {
         const result = await this.authService.resetPassword(req.body);
         res.status(200).json({
             success: true,
-            message: "Password anda berhasil diperbarui",
+            message: 'Password anda berhasil diperbarui',
             data: result,
         });
     });
@@ -99,12 +99,12 @@ export class AuthController {
     changePassword = asyncHandler(async (req, res) => {
         const userId = req.user?.id;
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error('Unauthorized');
         }
         const result = await this.authService.changePassword(userId, req.body);
         res.status(200).json({
             success: true,
-            message: "Password berhasil diubah",
+            message: 'Password berhasil diubah',
             data: result,
         });
     });

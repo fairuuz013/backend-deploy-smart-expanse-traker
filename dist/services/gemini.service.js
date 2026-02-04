@@ -1,8 +1,8 @@
 // backend/src/services/gemini.service.ts
-import { DEFAULT_INSIGHT_PROMPT } from "../ai/prompts/insight.default.js";
-import { DEFAULT_CHAT_PROMPT } from "../ai/prompts/chat.default.js";
-import { LUNE_CHAT_PROMPT } from "../ai/prompts/chat.lune.js";
-import { LUNE_INSIGHT_PROMPT } from "../ai/prompts/insight.lune.js";
+import { DEFAULT_INSIGHT_PROMPT } from '../ai/prompts/insight.default.js';
+import { DEFAULT_CHAT_PROMPT } from '../ai/prompts/chat.default.js';
+import { LUNE_CHAT_PROMPT } from '../ai/prompts/chat.lune.js';
+import { LUNE_INSIGHT_PROMPT } from '../ai/prompts/insight.lune.js';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 dotenv.config();
@@ -37,15 +37,15 @@ export class GeminiService {
         try {
             const result = await this.model.generateContent(prompt);
             const text = result.response.text();
-            const firstBrace = text.indexOf("{");
-            const lastBrace = text.lastIndexOf("}");
+            const firstBrace = text.indexOf('{');
+            const lastBrace = text.lastIndexOf('}');
             if (firstBrace === -1 || lastBrace === -1) {
                 throw new Error("Format JSON tidak ditemukan.");
             }
             return JSON.parse(text.substring(firstBrace, lastBrace + 1));
         }
         catch (error) {
-            console.error("\u274C GEMINI ERROR:", error);
+            console.error("❌ GEMINI ERROR:", error);
             return {
                 score: 0,
                 status: "ERROR",

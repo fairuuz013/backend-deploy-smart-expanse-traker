@@ -1,7 +1,7 @@
 // backend/src/index.ts
-import app from "./app.js";
+import app from './app.js';
 import os from 'os';
-import config from './utils/env';
+import config from './utils/env.js';
 
 // --- LOGIKA SEDERHANA & AMAN ---
 // Cek apakah kode ini dijalankan di Vercel?

@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { asyncHandler } from '../utils/asyncHandler';
-import { AuthService } from '../services/auth.service';
+import { asyncHandler } from '../utils/asyncHandler.js';
+import { AuthService } from '../services/auth.service.js';
 
 export class AuthController {
   private authService: AuthService;

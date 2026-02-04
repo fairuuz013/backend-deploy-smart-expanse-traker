@@ -1,11 +1,11 @@
-import { Router } from "express";
-import { WalletController } from "../controllers/wallet.controller.js";
-import { AuthMiddleware } from "../middlewares/auth.middleware.js";
+import { Router } from 'express';
+import { WalletController } from '../controllers/wallet.controller.js';
+import { AuthMiddleware } from '../middlewares/auth.middleware.js';
 const router = Router();
 const walletController = new WalletController();
 const authMiddleware = new AuthMiddleware();
 // Lightweight ping endpoint to validate connectivity (no auth required)
-router.get("/ping", (_req, res) => res.status(200).json({ success: true, message: "wallets ping OK" }));
+router.get('/ping', (_req, res) => res.status(200).json({ success: true, message: 'wallets ping OK' }));
 /**
  * @swagger
  * tags:
@@ -54,7 +54,7 @@ router.get("/ping", (_req, res) => res.status(200).json({ success: true, message
  *       401:
  *         description: Unauthorized
  */
-router.get("/", authMiddleware.handle, walletController.index);
+router.get('/', authMiddleware.handle, walletController.index);
 /**
  * @swagger
  * /wallets:
@@ -91,7 +91,7 @@ router.get("/", authMiddleware.handle, walletController.index);
  *       401:
  *         description: Unauthorized
  */
-router.post("/", authMiddleware.handle, walletController.create);
+router.post('/', authMiddleware.handle, walletController.create);
 /**
  * @swagger
  * /wallets/{id}:
@@ -131,7 +131,7 @@ router.post("/", authMiddleware.handle, walletController.create);
  *       401:
  *         description: Unauthorized
  */
-router.put("/:id", authMiddleware.handle, walletController.update);
+router.put('/:id', authMiddleware.handle, walletController.update);
 /**
  * @swagger
  * /wallets/{id}:
@@ -155,6 +155,6 @@ router.put("/:id", authMiddleware.handle, walletController.update);
  *       401:
  *         description: Unauthorized
  */
-router.delete("/:id", authMiddleware.handle, walletController.delete);
+router.delete('/:id', authMiddleware.handle, walletController.delete);
 export default router;
 //# sourceMappingURL=wallet.routes.js.map

@@ -1,6 +1,6 @@
-import fs from "fs";
-import path from "path";
-import prisma from "../database.js";
+import fs from 'fs';
+import path from 'path';
+import prisma from '../database.js';
 export class UserService {
     async getProfile(userId) {
         const user = await prisma.user.findUnique({
@@ -74,7 +74,7 @@ export class UserService {
             if (fs.existsSync(fullPath)) {
                 try {
                     fs.unlinkSync(fullPath);
-                    if (process.env.NODE_ENV === "development") {
+                    if (process.env.NODE_ENV === 'development') {
                         console.log(`[Storage] Foto lama dihapus: ${oldAvatarPath}`);
                     }
                 }

@@ -1,5 +1,5 @@
-import { BudgetRepository } from "../repositories/budget.repository";
-import prisma from "../database"; // Pastikan path instance prisma benar
+import { BudgetRepository } from '../repositories/budget.repository.js';
+import prisma from '../database.js'; // Pastikan path instance prisma benar
 
 export class BudgetService {
   private budgetRepo: BudgetRepository;
@@ -13,10 +13,10 @@ export class BudgetService {
    * Menerima input raw dari Controller dan memproses logic tanggal
    */
   async setMonthBudget(
-    userId: string, 
-    amount: number, 
-    month: number, 
-    year: number, 
+    userId: string,
+    amount: number,
+    month: number,
+    year: number,
     categoryId?: number
   ) {
     if (amount < 0) throw new Error("Budget tidak boleh negatif");
@@ -42,18 +42,18 @@ export class BudgetService {
     if (month < 1 || month > 12) throw new Error("Bulan tidak valid");
 
     const targetDate = new Date(year, month - 1, 1);
-    
+
     const budgets = await this.budgetRepo.findAllByMonth(userId, targetDate);
-    
+
     // Mapping response
     return budgets.map(b => {
       // Prisma Decimal dikembalikan sebagai Object/String, perlu convert ke Number
-      const limitNumber = Number(b.monthly_limit); 
+      const limitNumber = Number(b.monthly_limit);
 
       return {
         id: b.id,
         categoryId: b.category_id, // Kirim ID kategori juga
-        categoryName: b.category ? b.category.name : "Global Budget", 
+        categoryName: b.category ? b.category.name : "Global Budget",
         amount: limitNumber, // Frontend property: amount
         period: 'MONTHLY', // Hardcode sementara karena skema DB monthly
         month: b.month_year.getMonth() + 1, // Kembalikan ke format 1-12

@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { BudgetController } from "../controllers/budget.controller.js";
-import { AuthMiddleware } from "../middlewares/auth.middleware.js";
+import { Router } from 'express';
+import { BudgetController } from '../controllers/budget.controller.js';
+import { AuthMiddleware } from '../middlewares/auth.middleware.js';
 const router = Router();
 const budgetController = new BudgetController();
 const authMiddleware = new AuthMiddleware();

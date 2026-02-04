@@ -1,5 +1,5 @@
-import { CategoryService } from "../services/category.service.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { CategoryService } from '../services/category.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 export class CategoryController {
     categoryService;
     constructor() {
@@ -11,13 +11,13 @@ export class CategoryController {
             throw new Error("Unauthorized");
         const { type } = req.query;
         // --- LOG START ---
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === 'development') {
             // Perhatikan: Di sini kita log 'query', bukan 'body'
-            console.log("[category] getAll called from", req.ip || req.hostname, "userId:", userId, "query:", req.query);
+            console.log('[category] getAll called from', req.ip || req.hostname, 'userId:', userId, 'query:', req.query);
         }
         const categories = await this.categoryService.getCategories(userId, type);
         // --- LOG END ---
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === 'development') {
             // Kita log jumlah data yang didapat, biar tahu filternya jalan atau tidak
             console.log(`[category] getAll returned ${categories.length} items for userId=${userId}`);
         }
@@ -32,12 +32,12 @@ export class CategoryController {
         if (!userId)
             throw new Error("Unauthorized");
         // --- LOG START ---
-        if (process.env.NODE_ENV === "development") {
-            console.log("[category] create called from", req.ip || req.hostname, "userId:", userId, "body:", req.body);
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[category] create called from', req.ip || req.hostname, 'userId:', userId, 'body:', req.body);
         }
         const newCategory = await this.categoryService.createCategory(userId, req.body);
         // --- LOG END ---
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === 'development') {
             try {
                 console.log(`[category] created id=${newCategory.id} name=${newCategory.name} userId=${userId}`);
             }

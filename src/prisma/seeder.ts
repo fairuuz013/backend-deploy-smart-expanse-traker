@@ -1,4 +1,4 @@
-// import prisma from '../database';
+// import prisma from '../database.js';
 // import { TransactionType, UserRole, OtpType } from '@prisma/client';
 // import { faker } from '@faker-js/faker';
 // import * as bcrypt from 'bcrypt';

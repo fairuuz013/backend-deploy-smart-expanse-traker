@@ -1,10 +1,10 @@
 // backend/src/services/ai.service.ts
-import prisma from "../database.js";
-import { AiRepository } from "../repositories/ai.repository.js";
-import { TransactionRepository } from "../repositories/transaction.repository.js";
-import { CategoryRepository } from "../repositories/category.repository.js";
-import { BudgetRepository } from "../repositories/budget.repository.js";
-import { GeminiService } from "./gemini.service.js";
+import prisma from '../database.js';
+import { AiRepository } from '../repositories/ai.repository.js';
+import { TransactionRepository } from '../repositories/transaction.repository.js';
+import { CategoryRepository } from '../repositories/category.repository.js';
+import { BudgetRepository } from '../repositories/budget.repository.js';
+import { GeminiService } from './gemini.service.js';
 export class AiService {
     aiRepo;
     transactionRepo;
@@ -57,7 +57,7 @@ export class AiService {
         const topCategories = await Promise.all(topExpensesRaw.map(async (item) => {
             const cat = await this.categoryRepo.findById(item.category_id);
             const amount = Number(item._sum.amount);
-            return `${cat?.name || "Lainnya"}: Rp ${amount.toLocaleString("id-ID")}`;
+            return `${cat?.name || 'Lainnya'}: Rp ${amount.toLocaleString('id-ID')}`;
         }));
         // D. [UPDATED] Ambil Budget List & Sum Total Limit
         // Karena budget sekarang bisa banyak (per kategori), kita ambil semua
@@ -108,16 +108,16 @@ export class AiService {
             ? totalBudgetLimit - totalExpense
             : totalIncome - totalExpense;
         const recentTransactions = await this.transactionRepo.findRecent(userId, 5);
-        const transactionListText = recentTransactions.map(t => `- ${t.type} Rp ${Number(t.amount).toLocaleString("id-ID")} (${t.category?.name || "Lainnya"})`).join("\n");
+        const transactionListText = recentTransactions.map(t => `- ${t.type} Rp ${Number(t.amount).toLocaleString('id-ID')} (${t.category?.name || 'Lainnya'})`).join('\n');
         const contextSummary = `
       FAKTA KEUANGAN USER:
       - Nama: ${userProfile.name}
       - Pekerjaan: ${userProfile.occupation}
       - Status: ${userProfile.relationship}
-      - Pemasukan Bulan Ini: Rp ${totalIncome.toLocaleString("id-ID")}
-      - Pengeluaran Bulan Ini: Rp ${totalExpense.toLocaleString("id-ID")}
-      - Total Budget (Limit): Rp ${totalBudgetLimit.toLocaleString("id-ID")}
-      - Sisa Dana (Safety): Rp ${remainingBudget.toLocaleString("id-ID")}
+      - Pemasukan Bulan Ini: Rp ${totalIncome.toLocaleString('id-ID')}
+      - Pengeluaran Bulan Ini: Rp ${totalExpense.toLocaleString('id-ID')}
+      - Total Budget (Limit): Rp ${totalBudgetLimit.toLocaleString('id-ID')}
+      - Sisa Dana (Safety): Rp ${remainingBudget.toLocaleString('id-ID')}
       
       5 TRANSAKSI TERAKHIR:
       ${transactionListText}

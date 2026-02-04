@@ -1,6 +1,6 @@
-import { TransactionRepository } from "../repositories/transaction.repository";
-import { WalletRepository } from "../repositories/wallet.repository";
-import prisma from "../database";
+import { TransactionRepository } from '../repositories/transaction.repository.js';
+import { WalletRepository } from '../repositories/wallet.repository.js';
+import prisma from '../database.js';
 import { TransactionType } from "@prisma/client";
 
 

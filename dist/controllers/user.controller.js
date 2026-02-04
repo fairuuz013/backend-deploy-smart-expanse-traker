@@ -1,5 +1,5 @@
-import { UserService } from "../services/user.service.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { UserService } from '../services/user.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 export class UserController {
     userService;
     constructor() {
@@ -24,11 +24,11 @@ export class UserController {
             throw new Error("Unauthorized");
         // 1. Tangkap file dari req.file (disediakan oleh multer)
         const file = req.file;
-        if (process.env.NODE_ENV === "development") {
-            console.log("[user] updateProfile called from", req.ip || req.hostname, {
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[user] updateProfile called from', req.ip || req.hostname, {
                 userId,
                 body: req.body,
-                file: file ? file.filename : "No file uploaded"
+                file: file ? file.filename : 'No file uploaded'
             });
         }
         // 2. Gabungkan body data dengan path file avatar (jika ada)
@@ -39,7 +39,7 @@ export class UserController {
         };
         // 3. Kirim data yang sudah digabung ke service
         const updatedUser = await this.userService.updateProfile(userId, updateData);
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === 'development') {
             try {
                 console.log(`[user] profile updated id=${updatedUser.id} userId=${userId}`);
             }

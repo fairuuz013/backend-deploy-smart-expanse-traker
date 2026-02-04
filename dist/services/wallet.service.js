@@ -1,8 +1,8 @@
 // services/wallet.service.ts
-import { WalletRepository } from "../repositories/wallet.repository.js";
-import prisma from "../database.js";
+import { WalletRepository } from '../repositories/wallet.repository.js';
+import prisma from '../database.js';
 // 👇 1. Import Enum dari generated prisma
-import { WalletType } from "@prisma/client";
+import { WalletType } from '@prisma/client';
 export class WalletService {
     walletRepo;
     constructor() {
@@ -19,7 +19,7 @@ export class WalletService {
         // 2️⃣ Validasi tipe wallet (string → enum)
         const isValidType = Object.values(WalletType).includes(data.type);
         if (!isValidType) {
-            throw new Error(`Tipe wallet '${data.type}' tidak valid. Pilihan: ${Object.values(WalletType).join(", ")}`);
+            throw new Error(`Tipe wallet '${data.type}' tidak valid. Pilihan: ${Object.values(WalletType).join(', ')}`);
         }
         // 3️⃣ Casting aman setelah validasi
         const typeEnum = data.type;

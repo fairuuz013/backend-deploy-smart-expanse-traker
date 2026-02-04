@@ -1,6 +1,6 @@
 // src/services/mail.service.ts
-import * as brevo from "@getbrevo/brevo";
-import { getOtpTemplate } from "../utils/emailTemplates.js"; // Import template tadi
+import * as brevo from '@getbrevo/brevo';
+import { getOtpTemplate } from '../utils/emailTemplates.js'; // Import template tadi
 export class MailService {
     apiInstance;
     constructor() {

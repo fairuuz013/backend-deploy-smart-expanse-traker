@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client'; 
-import { ActivityAction } from '../types/activity.types';
+import { PrismaClient } from '@prisma/client';
+import { ActivityAction } from '../types/activity.types.js';
 
 export class ActivityLogRepository {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaClient) { }
 
   async create(data: { userId: string; action: ActivityAction; description: string }) {
     return await this.prisma.activityLog.create({

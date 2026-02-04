@@ -1,5 +1,5 @@
-import { BudgetService } from "../services/budget.service.js";
-import { asyncHandler } from "../utils/asyncHandler.js"; // Pastikan path utility benar
+import { BudgetService } from '../services/budget.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js'; // Pastikan path utility benar
 export class BudgetController {
     budgetService;
     constructor() {

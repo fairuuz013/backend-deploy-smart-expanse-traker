@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { AiController } from '../controllers/ai.controller';
+import { AiController } from '../controllers/ai.controller.js';
 // Pastikan path middleware auth ini sesuai dengan project-mu
-import { AuthMiddleware } from '../middlewares/auth.middleware'; 
+import { AuthMiddleware } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 const aiController = new AiController();

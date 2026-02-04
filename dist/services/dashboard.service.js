@@ -1,6 +1,6 @@
-import { TransactionRepository } from "../repositories/transaction.repository.js";
-import { WalletRepository } from "../repositories/wallet.repository.js";
-import prisma from "../database.js";
+import { TransactionRepository } from '../repositories/transaction.repository.js';
+import { WalletRepository } from '../repositories/wallet.repository.js';
+import prisma from '../database.js';
 import { TransactionType } from "@prisma/client";
 export class DashboardService {
     transactionRepo;
@@ -41,7 +41,7 @@ export class DashboardService {
         console.log(`[DashboardService] Summary - Balance: ${totalRealBalance}, Income: ${totalIncome}, Expense: ${totalExpense}`);
         const chartMap = new Map();
         dailyData.forEach(trx => {
-            const dateKey = trx.transaction_date.toISOString().split("T")[0];
+            const dateKey = trx.transaction_date.toISOString().split('T')[0];
             const amount = Number(trx.amount);
             if (!chartMap.has(dateKey)) {
                 chartMap.set(dateKey, { income: 0, expense: 0 });

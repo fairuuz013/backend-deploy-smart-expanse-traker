@@ -1,6 +1,6 @@
 // services/wallet.service.ts
-import { WalletRepository } from '../repositories/wallet.repository';
-import prisma from '../database';
+import { WalletRepository } from '../repositories/wallet.repository.js';
+import prisma from '../database.js';
 // 👇 1. Import Enum dari generated prisma
 import { WalletType } from '@prisma/client';
 

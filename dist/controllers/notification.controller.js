@@ -1,5 +1,5 @@
-import { NotificationService } from "../services/notification.service.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { NotificationService } from '../services/notification.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 export class NotificationController {
     notificationService;
     constructor() {

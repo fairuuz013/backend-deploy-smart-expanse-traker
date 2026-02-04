@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { BudgetService } from '../services/budget.service';
-import { asyncHandler } from '../utils/asyncHandler'; // Pastikan path utility benar
+import { BudgetService } from '../services/budget.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js'; // Pastikan path utility benar
 
 export class BudgetController {
   private budgetService: BudgetService;
@@ -31,10 +31,10 @@ export class BudgetController {
     const categoryIdNum = categoryId ? Number(categoryId) : undefined;
 
     const result = await this.budgetService.setMonthBudget(
-      userId, 
-      Number(amount), 
-      targetMonth, 
-      targetYear, 
+      userId,
+      Number(amount),
+      targetMonth,
+      targetYear,
       categoryIdNum
     );
 
@@ -63,7 +63,7 @@ export class BudgetController {
     res.status(200).json({
       success: true,
       message: "List Budget berhasil diambil",
-      data: data 
+      data: data
     });
   });
 }

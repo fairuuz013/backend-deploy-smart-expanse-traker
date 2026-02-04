@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { DashboardService } from "../services/dashboard.service";
-import { asyncHandler } from "../utils/asyncHandler";
+import { DashboardService } from '../services/dashboard.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 export class DashboardController {
     private service: DashboardService;
@@ -35,7 +35,7 @@ export class DashboardController {
             try {
                 const targetDate = month && year ? `${month}/${year}` : 'All Time';
                 console.log(`[dashboard] stats retrieved for userId=${userId} period=${targetDate}`);
-            } catch (_) {}
+            } catch (_) { }
         }
 
         res.status(200).json({

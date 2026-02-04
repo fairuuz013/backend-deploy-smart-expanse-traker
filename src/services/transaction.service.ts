@@ -1,10 +1,10 @@
-import { TransactionRepository } from "../repositories/transaction.repository";
-import { WalletRepository } from "../repositories/wallet.repository";
-import { BudgetRepository } from "../repositories/budget.repository";
-import { NotificationService } from "./notification.service";
-import { CategoryRepository } from "../repositories/category.repository";
-import prisma from "../database";
-import type { CreateTransactionDTO, UpdateTransactionDTO } from "../validations/transaction.validation";
+import { TransactionRepository } from '../repositories/transaction.repository.js';
+import { WalletRepository } from '../repositories/wallet.repository.js';
+import { BudgetRepository } from '../repositories/budget.repository.js';
+import { NotificationService } from './notification.service.js';
+import { CategoryRepository } from '../repositories/category.repository.js';
+import prisma from '../database.js';
+import type { CreateTransactionDTO, UpdateTransactionDTO } from '../validations/transaction.validation.js';
 import { TransactionType, CategoryOption } from "@prisma/client";
 
 export class TransactionService {

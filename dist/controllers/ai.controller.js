@@ -1,5 +1,5 @@
-import { AiService } from "../services/ai.service.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { AiService } from '../services/ai.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 export class AiController {
     aiService;
     constructor() {
@@ -9,7 +9,7 @@ export class AiController {
     getInsight = asyncHandler(async (req, res) => {
         // 1. Ambil User ID dari Token (hasil decode AuthMiddleware)
         const userId = req.user?.id;
-        const luneAwake = req.query.luneAwake === "true"; // Extract luneAwake from query
+        const luneAwake = req.query.luneAwake === 'true'; // Extract luneAwake from query
         if (!userId) {
             // Sebenarnya ini biasanya sudah dicegat middleware, tapi double check
             const error = new Error("Unauthorized");
@@ -17,13 +17,13 @@ export class AiController {
             throw error;
         }
         // 2. Logging Development (Biar enak debug di terminal)
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === 'development') {
             console.log(`[AI] Insight request from IP=${req.ip} userId=${userId}`);
         }
         // 3. Panggil Service Utama
         // Controller gak perlu tau soal Gemini/Prisma, dia cuma tau "Minta Insight"
         const data = await this.aiService.getFinancialInsight(userId, luneAwake);
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === 'development') {
             console.log(`[AI] Insight generated successfully for userId=${userId}`);
         }
         // 4. Kirim Response Standard JSON
@@ -36,13 +36,13 @@ export class AiController {
     chatWithBot = asyncHandler(async (req, res) => {
         const userId = req.user?.id;
         const { message } = req.body; // Extract message from body
-        const luneAwake = req.query.luneAwake === "true"; // Extract luneAwake from query
-        console.log("Chat request received:", { userId, message, luneAwake, type: typeof luneAwake });
+        const luneAwake = req.query.luneAwake === 'true'; // Extract luneAwake from query
+        console.log('Chat request received:', { userId, message, luneAwake, type: typeof luneAwake });
         if (!userId)
             throw new Error("Unauthorized");
         if (!message)
             throw new Error("Message is required");
-        console.log("Using luneAwake:", luneAwake);
+        console.log('Using luneAwake:', luneAwake);
         // Panggil Service
         const reply = await this.aiService.chatWithAi(userId, message, luneAwake);
         res.status(200).json({

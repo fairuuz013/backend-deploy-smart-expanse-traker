@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { CategoryController } from "../controllers/category.controller.js";
-import { AuthMiddleware } from "../middlewares/auth.middleware.js";
+import { Router } from 'express';
+import { CategoryController } from '../controllers/category.controller.js';
+import { AuthMiddleware } from '../middlewares/auth.middleware.js';
 const router = Router();
 const categoryController = new CategoryController();
 const authMiddleware = new AuthMiddleware();
@@ -79,7 +79,7 @@ const authMiddleware = new AuthMiddleware();
  *       401:
  *         description: Unauthorized
  */
-router.get("/", authMiddleware.handle, categoryController.getAll);
+router.get('/', authMiddleware.handle, categoryController.getAll);
 /**
  * @swagger
  * /categories:
@@ -129,6 +129,6 @@ router.get("/", authMiddleware.handle, categoryController.getAll);
  *       401:
  *         description: Unauthorized
  */
-router.post("/", authMiddleware.handle, categoryController.create);
+router.post('/', authMiddleware.handle, categoryController.create);
 export default router;
 //# sourceMappingURL=category.routes.js.map

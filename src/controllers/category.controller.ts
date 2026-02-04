@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { CategoryService } from "../services/category.service";
-import { asyncHandler } from "../utils/asyncHandler";
+import { CategoryService } from '../services/category.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 export class CategoryController {
     private categoryService: CategoryService;
@@ -9,9 +9,9 @@ export class CategoryController {
         this.categoryService = new CategoryService();
     }
 
-    public getAll = asyncHandler(async (req: Request, res: Response) =>{
+    public getAll = asyncHandler(async (req: Request, res: Response) => {
         const userId = req.user?.id;
-        if(!userId) throw new Error("Unauthorized");
+        if (!userId) throw new Error("Unauthorized");
 
         const { type } = req.query;
 
@@ -54,7 +54,7 @@ export class CategoryController {
         if (process.env.NODE_ENV === 'development') {
             try {
                 console.log(`[category] created id=${(newCategory as any).id} name=${(newCategory as any).name} userId=${userId}`);
-            } catch (_) {}
+            } catch (_) { }
         }
 
         res.status(201).json({

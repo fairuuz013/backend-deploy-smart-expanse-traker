@@ -1,5 +1,5 @@
-import { CategoryRepository } from '../repositories/category.repository';
-import prisma from '../database'; // Import koneksi database singleton
+import { CategoryRepository } from '../repositories/category.repository.js';
+import prisma from '../database.js'; // Import koneksi database singleton
 import { TransactionType, CategoryOption } from '@prisma/client';
 
 

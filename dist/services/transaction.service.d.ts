@@ -1,4 +1,4 @@
-import type { CreateTransactionDTO, UpdateTransactionDTO } from "../validations/transaction.validation.js";
+import type { CreateTransactionDTO, UpdateTransactionDTO } from '../validations/transaction.validation.js';
 export declare class TransactionService {
     private transactionRepo;
     private walletRepo;

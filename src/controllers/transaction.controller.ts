@@ -1,11 +1,11 @@
 import type { Request, Response } from "express";
-import { TransactionService } from "../services/transaction.service";
-import { asyncHandler } from "../utils/asyncHandler";
-import { 
-    createTransactionSchema, 
-    updateTransactionSchema, 
-    queryTransactionSchema 
-} from "../validations/transaction.validation";
+import { TransactionService } from '../services/transaction.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
+import {
+    createTransactionSchema,
+    updateTransactionSchema,
+    queryTransactionSchema
+} from '../validations/transaction.validation.js';
 
 export class TransactionController {
     private service: TransactionService;
@@ -32,10 +32,10 @@ export class TransactionController {
             userId,
             query.month ? Number(query.month) : undefined,
             query.year ? Number(query.year) : undefined,
-            query.type as string | undefined,     
+            query.type as string | undefined,
             query.search as string | undefined,
-            query.page ? Number(query.page) : undefined,     
-            query.limit ? Number(query.limit) : undefined     
+            query.page ? Number(query.page) : undefined,
+            query.limit ? Number(query.limit) : undefined
         );
 
         // --- LOG END ---
@@ -43,15 +43,15 @@ export class TransactionController {
             try {
                 // Log jumlah data & info pagination
                 console.log(`[transaction] getAll returned ${result.data.length} items. Page ${result.meta.page}/${result.meta.total_pages}`);
-            } catch (_) {}
+            } catch (_) { }
         }
 
         res.status(200).json({
             success: true,
             message: "Operation success",
-            data: result.data, 
+            data: result.data,
             meta: {
-                ...result.meta, 
+                ...result.meta,
                 filter_month: query.month || new Date().getMonth() + 1,
                 filter_year: query.year || new Date().getFullYear(),
                 search: query.search || null
@@ -82,9 +82,10 @@ export class TransactionController {
         if (process.env.NODE_ENV === 'development') {
             try {
                 console.log(`[transaction] fetched detail id=${id} userId=${userId}`);
-            } catch (err:any) {
+            } catch (err: any) {
                 console.error('[transaction] getDetail error:', err.message);
-            }}
+            }
+        }
     });
 
     // 3. CREATE
@@ -120,7 +121,8 @@ export class TransactionController {
         if (process.env.NODE_ENV === 'development') {
             try {
                 console.log(`[transaction] created id=${(newTransaction as any).id} name=${(newTransaction as any).name} userId=${userId}`);
-            } catch (_) {}}
+            } catch (_) { }
+        }
     });
 
     // 4. UPDATE
@@ -129,10 +131,10 @@ export class TransactionController {
         if (!userId) throw new Error("Unauthorized");
 
         const { id } = req.params;
-        
+
         // --- LOG START ---
         if (process.env.NODE_ENV === 'development') {
-             console.log('[transaction] update called id:', id, 'body:', req.body);
+            console.log('[transaction] update called id:', id, 'body:', req.body);
         }
 
         const validatedData = updateTransactionSchema.parse(req.body);
@@ -143,7 +145,7 @@ export class TransactionController {
         if (process.env.NODE_ENV === 'development') {
             try {
                 console.log(`[transaction] updated id=${(updatedTransaction as any).id}`);
-            } catch (_) {}
+            } catch (_) { }
         }
 
         res.status(200).json({
@@ -154,7 +156,8 @@ export class TransactionController {
         if (process.env.NODE_ENV === 'development') {
             try {
                 console.log(`[transaction] updated id=${(updatedTransaction as any).id} name=${(updatedTransaction as any).name} userId=${userId}`);
-            } catch (_) {}}
+            } catch (_) { }
+        }
     });
 
     // 5. DELETE
@@ -166,24 +169,25 @@ export class TransactionController {
 
         // --- LOG START ---
         if (process.env.NODE_ENV === 'development') {
-             console.log('[transaction] delete called id:', id);
+            console.log('[transaction] delete called id:', id);
         }
 
         await this.service.deleteTransaction(userId, String(id));
 
         // --- LOG END ---
         if (process.env.NODE_ENV === 'development') {
-             console.log(`[transaction] deleted id=${id}`);
+            console.log(`[transaction] deleted id=${id}`);
         }
 
         res.status(200).json({
             success: true,
             message: "Operation success",
-            data: {} 
+            data: {}
         });
         if (process.env.NODE_ENV === 'development') {
             try {
                 console.log(`[transaction] deleted id=${id} userId=${userId}`);
-            } catch (_) {}}
+            } catch (_) { }
+        }
     });
 }

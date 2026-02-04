@@ -1,6 +1,6 @@
-import { ActivityLogRepository } from '../repositories/activity-log.repository';
-import { ActivityAction } from '../types/activity.types';
-import prisma from '../database'; 
+import { ActivityLogRepository } from '../repositories/activity-log.repository.js';
+import { ActivityAction } from '../types/activity.types.js';
+import prisma from '../database.js';
 
 export class ActivityLogService {
   private activityLogRepo: ActivityLogRepository;

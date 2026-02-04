@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { AuthController } from '../controllers/auth.controller';
-import { AuthMiddleware } from '../middlewares/auth.middleware';
-import { RateLimitMiddleware } from '../middlewares/rateLimiter.middlerware';
+import { AuthController } from '../controllers/auth.controller.js';
+import { AuthMiddleware } from '../middlewares/auth.middleware.js';
+import { RateLimitMiddleware } from '../middlewares/rateLimiter.middlerware.js';
 
 const router = Router();
 
@@ -18,7 +18,7 @@ router.post('/reset-password', RateLimitMiddleware.authLimiter, authController.r
 
 
 // --- PROTECTED ROUTES (Butuh Token) ---
-router.use(authMiddleware.handle); 
+router.use(authMiddleware.handle);
 
 // 7. Get Profile Data
 router.get('/me', authController.me);

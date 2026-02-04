@@ -1,4 +1,4 @@
-import { ActivityAction } from "../types/activity.types.js";
+import { ActivityAction } from '../types/activity.types.js';
 export declare class ActivityLogService {
     private activityLogRepo;
     constructor();

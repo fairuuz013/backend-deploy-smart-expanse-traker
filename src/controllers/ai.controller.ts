@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { AiService } from '../services/ai.service';
-import { asyncHandler } from '../utils/asyncHandler';
+import { AiService } from '../services/ai.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 export class AiController {
   private aiService: AiService;
@@ -16,10 +16,10 @@ export class AiController {
     const luneAwake = req.query.luneAwake === 'true'; // Extract luneAwake from query
 
     if (!userId) {
-        // Sebenarnya ini biasanya sudah dicegat middleware, tapi double check
-        const error: any = new Error("Unauthorized");
-        error.status = 401;
-        throw error;
+      // Sebenarnya ini biasanya sudah dicegat middleware, tapi double check
+      const error: any = new Error("Unauthorized");
+      error.status = 401;
+      throw error;
     }
 
     // 2. Logging Development (Biar enak debug di terminal)
@@ -32,7 +32,7 @@ export class AiController {
     const data = await this.aiService.getFinancialInsight(userId, luneAwake);
 
     if (process.env.NODE_ENV === 'development') {
-        console.log(`[AI] Insight generated successfully for userId=${userId}`);
+      console.log(`[AI] Insight generated successfully for userId=${userId}`);
     }
 
     // 4. Kirim Response Standard JSON

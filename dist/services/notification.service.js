@@ -1,5 +1,5 @@
-import prisma from "../database.js";
-import { NotificationRepository } from "../repositories/notification.repository.js";
+import prisma from '../database.js';
+import { NotificationRepository } from '../repositories/notification.repository.js';
 export class NotificationService {
     notificationRepo;
     constructor() {

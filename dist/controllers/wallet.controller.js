@@ -1,5 +1,5 @@
-import { WalletService } from "../services/wallet.service.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { WalletService } from '../services/wallet.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 export class WalletController {
     walletService;
     constructor() {
@@ -18,11 +18,11 @@ export class WalletController {
     });
     create = asyncHandler(async (req, res) => {
         const userId = req.user?.id;
-        if (process.env.NODE_ENV === "development") {
-            console.log("[wallet] create called from", req.ip || req.hostname, "userId:", userId, "body:", req.body);
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[wallet] create called from', req.ip || req.hostname, 'userId:', userId, 'body:', req.body);
         }
         const wallet = await this.walletService.createWallet(userId, req.body);
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === 'development') {
             try {
                 console.log(`[wallet] created id=${wallet.id} name=${wallet.name} userId=${userId}`);
             }
@@ -39,11 +39,11 @@ export class WalletController {
         if (!userId)
             throw new Error("Unatuhorized");
         const { id } = req.params;
-        if (process.env.NODE_ENV === "development") {
-            console.log("[wallet] update called from", req.ip || req.hostname, "userId:", userId, "walletId:", id, "body:", req.body);
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[wallet] update called from', req.ip || req.hostname, 'userId:', userId, 'walletId:', id, 'body:', req.body);
         }
         const wallet = await this.walletService.updateWallet(userId, String(id), req.body);
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === 'development') {
             try {
                 console.log(`[wallet] updated id=${wallet.id} name=${wallet.name} userId=${userId}`);
             }
@@ -60,11 +60,11 @@ export class WalletController {
         if (!userId)
             throw new Error("Unauthorized"); // Validasi
         const { id } = req.params;
-        if (process.env.NODE_ENV === "development") {
-            console.log("[wallet] delete called from", req.ip || req.hostname, "userId:", userId, "walletId:", id);
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[wallet] delete called from', req.ip || req.hostname, 'userId:', userId, 'walletId:', id);
         }
         await this.walletService.deleteWallet(userId, String(id));
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === 'development') {
             console.log(`[wallet] deleted id=${id} by userId=${userId}`);
         }
         res.status(200).json({

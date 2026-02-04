@@ -1,5 +1,5 @@
-import { BudgetRepository } from "../repositories/budget.repository.js";
-import prisma from "../database.js"; // Pastikan path instance prisma benar
+import { BudgetRepository } from '../repositories/budget.repository.js';
+import prisma from '../database.js'; // Pastikan path instance prisma benar
 export class BudgetService {
     budgetRepo;
     constructor() {
@@ -40,7 +40,7 @@ export class BudgetService {
                 categoryId: b.category_id, // Kirim ID kategori juga
                 categoryName: b.category ? b.category.name : "Global Budget",
                 amount: limitNumber, // Frontend property: amount
-                period: "MONTHLY", // Hardcode sementara karena skema DB monthly
+                period: 'MONTHLY', // Hardcode sementara karena skema DB monthly
                 month: b.month_year.getMonth() + 1, // Kembalikan ke format 1-12
                 year: b.month_year.getFullYear(),
                 // Note: 'currentSpent' & 'status' biasanya dihitung terpisah via Transaction Aggregation, 

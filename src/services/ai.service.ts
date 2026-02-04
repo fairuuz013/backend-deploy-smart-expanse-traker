@@ -1,10 +1,10 @@
 // backend/src/services/ai.service.ts
-import prisma from '../database';
-import { AiRepository } from '../repositories/ai.repository';
-import { TransactionRepository } from '../repositories/transaction.repository';
-import { CategoryRepository } from '../repositories/category.repository';
-import { BudgetRepository } from '../repositories/budget.repository';
-import { GeminiService } from './gemini.service';
+import prisma from '../database.js';
+import { AiRepository } from '../repositories/ai.repository.js';
+import { TransactionRepository } from '../repositories/transaction.repository.js';
+import { CategoryRepository } from '../repositories/category.repository.js';
+import { BudgetRepository } from '../repositories/budget.repository.js';
+import { GeminiService } from './gemini.service.js';
 
 export class AiService {
   private aiRepo: AiRepository;
@@ -84,18 +84,18 @@ export class AiService {
     // D. [UPDATED] Ambil Budget List & Sum Total Limit
     // Karena budget sekarang bisa banyak (per kategori), kita ambil semua
     const budgetList = await this.budgetRepo.findAllByMonth(userId, now);
-    
+
     // Hitung Total Kapasitas Budget (Global + Semua Kategori)
     let totalBudgetLimit = 0;
-    
+
     if (budgetList.length > 0) {
-        totalBudgetLimit = budgetList.reduce((sum, item) => sum + Number(item.monthly_limit), 0);
+      totalBudgetLimit = budgetList.reduce((sum, item) => sum + Number(item.monthly_limit), 0);
     }
 
     // Fallback logic jika user belum set budget sama sekali
     if (totalBudgetLimit === 0) {
       // Asumsi default: Budget ideal = Total Pemasukan (jangan lebih besar pasak daripada tiang)
-      totalBudgetLimit = Number(totalIncome) || 1000000; 
+      totalBudgetLimit = Number(totalIncome) || 1000000;
     }
 
     // 3. PANGGIL AI
@@ -108,7 +108,7 @@ export class AiService {
       budgetLimit: totalBudgetLimit, // Kirim Total Akumulasi Budget
       topCategories,
     },
-    luneAwake);
+      luneAwake);
 
     // 4. SIMPAN HASIL
     return await this.aiRepo.create({
@@ -139,7 +139,7 @@ export class AiService {
     // [UPDATED] Hitung Sisa Budget Global/Akumulatif
     const budgetList = await this.budgetRepo.findAllByMonth(userId, now);
     const totalBudgetLimit = budgetList.reduce((sum, item) => sum + Number(item.monthly_limit), 0);
-    
+
     // Logic sisa: Jika ada budget, kurangi budget. Jika tidak, kurangi income.
     const remainingBudget = totalBudgetLimit > 0
       ? totalBudgetLimit - totalExpense

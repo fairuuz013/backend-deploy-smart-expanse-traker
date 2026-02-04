@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { NotificationService } from '../services/notification.service';
-import { asyncHandler } from '../utils/asyncHandler';
+import { NotificationService } from '../services/notification.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 export class NotificationController {
   private notificationService: NotificationService;
@@ -22,14 +22,14 @@ export class NotificationController {
     });
   });
 
- 
+
   public readNotification = asyncHandler(async (req: Request, res: Response) => {
     const userId = req.user?.id;
     if (!userId) throw new Error("Unauthorized");
 
     const notificationId = Number(req.params.id);
     if (isNaN(notificationId)) {
-        throw new Error("Invalid Notification ID");
+      throw new Error("Invalid Notification ID");
     }
 
     await this.notificationService.readNotification(userId, notificationId);

@@ -1,6 +1,6 @@
-import { CategoryRepository } from "../repositories/category.repository.js";
-import prisma from "../database.js"; // Import koneksi database singleton
-import { TransactionType, CategoryOption } from "@prisma/client";
+import { CategoryRepository } from '../repositories/category.repository.js';
+import prisma from '../database.js'; // Import koneksi database singleton
+import { TransactionType, CategoryOption } from '@prisma/client';
 export class CategoryService {
     categoryRepo;
     constructor() {
@@ -8,10 +8,10 @@ export class CategoryService {
     }
     async getCategories(userId, type) {
         let typeEnum;
-        if (type === "INCOME") {
+        if (type === 'INCOME') {
             typeEnum = TransactionType.INCOME;
         }
-        else if (type === "EXPENSE") {
+        else if (type === 'EXPENSE') {
             typeEnum = TransactionType.EXPENSE;
         }
         return await this.categoryRepo.findAll(userId, typeEnum);
@@ -23,7 +23,7 @@ export class CategoryService {
         }
         // 2. Mapping String ke Enum
         const categoryName = data.name;
-        const transactionType = data.type === "INCOME" ? TransactionType.INCOME : TransactionType.EXPENSE;
+        const transactionType = data.type === 'INCOME' ? TransactionType.INCOME : TransactionType.EXPENSE;
         // 3. Logic: Jika user membuat kategori baru sendiri (custom), 
         // secara default biarkan mereka menggunakan yang sudah ada, 
         // tapi jika ini untuk input transaksi 'Other', logikanya ada di TransactionService.

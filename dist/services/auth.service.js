@@ -1,10 +1,10 @@
-import prisma from "../database.js";
-import jwt from "jsonwebtoken";
-import { hashPassword, comparePassword } from "../utils/hash.js";
-import { ActivityLogService } from "./activity-log.service.js";
-import { ActivityAction } from "../types/activity.types.js";
-import { OtpRepository } from "../repositories/otp.repository.js";
-import { MailService } from "./mail.service.js";
+import prisma from '../database.js';
+import jwt from 'jsonwebtoken';
+import { hashPassword, comparePassword } from '../utils/hash.js';
+import { ActivityLogService } from './activity-log.service.js';
+import { ActivityAction } from '../types/activity.types.js';
+import { OtpRepository } from '../repositories/otp.repository.js';
+import { MailService } from './mail.service.js';
 export class AuthService {
     activityLogService = new ActivityLogService();
     otpRepository = new OtpRepository(prisma);
@@ -15,11 +15,11 @@ export class AuthService {
     async registerUser(data) {
         const { fullName, email, password } = data;
         if (!fullName || !email || !password) {
-            throw new Error("Full name, email, dan password wajib diisi");
+            throw new Error('Full name, email, dan password wajib diisi');
         }
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) {
-            throw new Error("Email sudah terdaftar");
+            throw new Error('Email sudah terdaftar');
         }
         const hashedPassword = await hashPassword(password);
         const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
@@ -37,18 +37,18 @@ export class AuthService {
     async verifyRegistration(email, code) {
         const otpRecord = await this.otpRepository.findValidRegistrationOtp(email, code);
         if (!otpRecord) {
-            throw new Error("Kode OTP salah atau kadaluarsa");
+            throw new Error('Kode OTP salah atau kadaluarsa');
         }
         const payload = otpRecord.payload;
         const user = await prisma.$transaction(async (tx) => {
-            const username = payload.fullName.replace(/\s+/g, "").toLowerCase() +
+            const username = payload.fullName.replace(/\s+/g, '').toLowerCase() +
                 Math.floor(100 + Math.random() * 900);
             const createdUser = await tx.user.create({
                 data: {
                     full_name: payload.fullName,
                     email,
                     password: payload.password,
-                    role: "USER",
+                    role: 'USER',
                     profile: { create: { username } },
                 },
             });
@@ -69,12 +69,12 @@ export class AuthService {
         const { email, password } = data;
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user)
-            throw new Error("Email atau password salah");
+            throw new Error('Email atau password salah');
         const isValid = await comparePassword(password, user.password);
         if (!isValid)
-            throw new Error("Email atau password salah");
-        const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        await this.activityLogService.log(user.id, ActivityAction.LOGIN, "Login success");
+            throw new Error('Email atau password salah');
+        const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        await this.activityLogService.log(user.id, ActivityAction.LOGIN, 'Login success');
         return {
             accessToken: token,
             user: {
@@ -92,8 +92,8 @@ export class AuthService {
             throw new Error("Akun ini sudah aktif, silakan login.");
         // Cari record pendaftaran sementara
         const pendingOtp = await prisma.otp.findFirst({
-            where: { email, type: "REGISTRATION" },
-            orderBy: { expired_at: "desc" }
+            where: { email, type: 'REGISTRATION' },
+            orderBy: { expired_at: 'desc' }
         });
         if (!pendingOtp)
             throw new Error("Data pendaftaran tidak ditemukan. Silakan register ulang.");
@@ -111,7 +111,7 @@ export class AuthService {
         await this.otpRepository.deleteOtpsByEmail(email);
         const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
         // Gunakan userId untuk forgot password karena user-nya sudah ada
-        await this.otpRepository.createOtpWithUserId(user.id, email, otpCode, "PASSWORD_RESET");
+        await this.otpRepository.createOtpWithUserId(user.id, email, otpCode, 'PASSWORD_RESET');
         await this.mailService.sendOTP(user.email, otpCode);
         await this.activityLogService.log(user.id, ActivityAction.FORGOT_PASSWORD, `Reset requested for: ${email}`);
         return { message: "Kode OTP reset password telah dikirim" };
@@ -128,7 +128,7 @@ export class AuthService {
             where: {
                 user_id: user.id,
                 code: code,
-                type: "PASSWORD_RESET",
+                type: 'PASSWORD_RESET',
                 expired_at: { gt: new Date() }
             }
         });

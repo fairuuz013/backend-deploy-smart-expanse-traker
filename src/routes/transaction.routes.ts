@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { TransactionController } from "../controllers/transaction.controller";
-import { AuthMiddleware } from "../middlewares/auth.middleware";
-import { RateLimitMiddleware } from "../middlewares/rateLimiter.middlerware";
+import { TransactionController } from '../controllers/transaction.controller.js';
+import { AuthMiddleware } from '../middlewares/auth.middleware.js';
+import { RateLimitMiddleware } from '../middlewares/rateLimiter.middlerware.js';
 
 const router = Router();
 const controller = new TransactionController();

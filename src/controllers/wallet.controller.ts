@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { WalletService } from '../services/wallet.service';
-import { asyncHandler } from '../utils/asyncHandler';
+import { WalletService } from '../services/wallet.service.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 
 export class WalletController {

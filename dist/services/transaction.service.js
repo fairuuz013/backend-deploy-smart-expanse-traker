@@ -1,9 +1,9 @@
-import { TransactionRepository } from "../repositories/transaction.repository.js";
-import { WalletRepository } from "../repositories/wallet.repository.js";
-import { BudgetRepository } from "../repositories/budget.repository.js";
-import { NotificationService } from "./notification.service.js";
-import { CategoryRepository } from "../repositories/category.repository.js";
-import prisma from "../database.js";
+import { TransactionRepository } from '../repositories/transaction.repository.js';
+import { WalletRepository } from '../repositories/wallet.repository.js';
+import { BudgetRepository } from '../repositories/budget.repository.js';
+import { NotificationService } from './notification.service.js';
+import { CategoryRepository } from '../repositories/category.repository.js';
+import prisma from '../database.js';
 import { TransactionType, CategoryOption } from "@prisma/client";
 export class TransactionService {
     transactionRepo;
@@ -94,7 +94,7 @@ export class TransactionService {
                 if (totalCatExpense > limit) {
                     const percentage = Math.round((totalCatExpense / limit) * 100);
                     const catName = categoryBudget.category?.name || "Kategori ini";
-                    await this.notificationService.sendAlert(userId, `⚠️ Budget ${catName} Jebol!`, `Pengeluaran ${catName} (Rp ${totalCatExpense.toLocaleString("id-ID")}) sudah ${percentage}% dari limit.`);
+                    await this.notificationService.sendAlert(userId, `⚠️ Budget ${catName} Jebol!`, `Pengeluaran ${catName} (Rp ${totalCatExpense.toLocaleString('id-ID')}) sudah ${percentage}% dari limit.`);
                     return; // Stop disini agar tidak spam (opsional)
                 }
             }
@@ -105,7 +105,7 @@ export class TransactionService {
                 const limit = Number(globalBudget.monthly_limit);
                 if (totalAllExpense > limit) {
                     const percentage = Math.round((totalAllExpense / limit) * 100);
-                    await this.notificationService.sendAlert(userId, "\uD83D\uDEA8 Global Budget Alert!", `Total pengeluaranmu (Rp ${totalAllExpense.toLocaleString("id-ID")}) sudah tembus ${percentage}% dari budget global.`);
+                    await this.notificationService.sendAlert(userId, "🚨 Global Budget Alert!", `Total pengeluaranmu (Rp ${totalAllExpense.toLocaleString('id-ID')}) sudah tembus ${percentage}% dari budget global.`);
                 }
             }
         }
@@ -120,9 +120,9 @@ export class TransactionService {
         const startDate = new Date(targetYear, targetMonth, 1);
         const endDate = new Date(targetYear, targetMonth + 1, 0, 23, 59, 59);
         let typeEnum;
-        if (type === "INCOME")
+        if (type === 'INCOME')
             typeEnum = TransactionType.INCOME;
-        else if (type === "EXPENSE")
+        else if (type === 'EXPENSE')
             typeEnum = TransactionType.EXPENSE;
         const { data, total } = await this.transactionRepo.findAll(userId, {
             startDate,
@@ -164,14 +164,14 @@ export class TransactionService {
                 throw new Error("Wallet tidak ditemukan");
             let currentBalance = Number(wallet.balance);
             // Revert saldo lama
-            if (oldTransaction.type === "INCOME")
+            if (oldTransaction.type === 'INCOME')
                 currentBalance -= Number(oldTransaction.amount);
             else
                 currentBalance += Number(oldTransaction.amount);
             const newAmount = data.amount !== undefined ? data.amount : Number(oldTransaction.amount);
             const newType = data.type !== undefined ? data.type : oldTransaction.type;
             // Apply saldo baru
-            if (newType === "INCOME")
+            if (newType === 'INCOME')
                 currentBalance += newAmount;
             else
                 currentBalance -= newAmount;

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import prisma from '../database';
+import prisma from '../database.js';
 import { RelationshipStatus } from '@prisma/client';
 
 export class UserService {

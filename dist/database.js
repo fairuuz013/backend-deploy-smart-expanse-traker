@@ -2,7 +2,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import config from "./utils/env.js";
+import config from './utils/env.js';
 const globalForPrisma = globalThis;
 const prismaClientSingleton = () => {
     // Neon menggunakan SSL, pastikan pool-nya menghandle ini
@@ -14,7 +14,7 @@ const prismaClientSingleton = () => {
     // kita tidak perlu lagi mengoper datasourceUrl di sini
     return new PrismaClient({
         adapter,
-        log: ["query", "info", "warn", "error"],
+        log: ['query', 'info', 'warn', 'error'],
     });
 };
 const prisma = globalForPrisma.prisma ?? prismaClientSingleton();

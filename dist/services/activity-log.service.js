@@ -1,5 +1,5 @@
-import { ActivityLogRepository } from "../repositories/activity-log.repository.js";
-import prisma from "../database.js";
+import { ActivityLogRepository } from '../repositories/activity-log.repository.js';
+import prisma from '../database.js';
 export class ActivityLogService {
     activityLogRepo;
     constructor() {
