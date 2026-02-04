@@ -1,31 +1,22 @@
-// src/database.ts
-import { PrismaClient } from "@prisma/client";
-import { Pool } from "pg";
-import { PrismaPg } from "@prisma/adapter-pg";
-import config from './utils/env.js';
+import { createRequire } from 'module';
+import { Pool } from 'pg'; 
+import config from './utils/env.js'; // Pastikan path ini benar sesuai struktur foldermu
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+// Bikin fungsi 'require' manual untuk menjembatani ESM ke CommonJS
+const require = createRequire(import.meta.url);
 
-const prismaClientSingleton = () => {
-    // Neon menggunakan SSL, pastikan pool-nya menghandle ini
-    const pool = new Pool({
-        connectionString: config.DATABASE_URL
-    });
+// Import Prisma pakai cara 'require' (Anti-Error Vercel)
+const { PrismaClient } = require('@prisma/client');
+const { PrismaPg } = require('@prisma/adapter-pg');
 
-    const adapter = new PrismaPg(pool);
+const pool = new Pool({ 
+    connectionString: config.DATABASE_URL 
+});
 
-    // Di Prisma 7.2, saat pakai adapter, 
-    // kita tidak perlu lagi mengoper datasourceUrl di sini
-    return new PrismaClient({
-        adapter,
-        log: ['query', 'info', 'warn', 'error'],
-    });
-};
+const adapter = new PrismaPg(pool);
 
-const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
-
-if (config.NODE_ENV !== "production") {
-    globalForPrisma.prisma = prisma;
-}
+const prisma = new PrismaClient({ 
+    adapter 
+});
 
 export default prisma;
