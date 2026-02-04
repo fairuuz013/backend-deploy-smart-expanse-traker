@@ -1,20 +1,24 @@
 import { createRequire } from 'module';
 import { Pool } from 'pg'; 
-import config from './utils/env.js'; // Pastikan path ini benar sesuai struktur foldermu
+import config from './utils/env.js';
 
-// Bikin fungsi 'require' manual untuk menjembatani ESM ke CommonJS
+// --- SOLUSI ERROR VERCEL ---
+// Kita buat fungsi 'require' sendiri supaya bisa baca Prisma Client versi CommonJS
 const require = createRequire(import.meta.url);
 
-// Import Prisma pakai cara 'require' (Anti-Error Vercel)
+// Import Library pakai 'require' agar tidak Error "does not provide export"
 const { PrismaClient } = require('@prisma/client');
 const { PrismaPg } = require('@prisma/adapter-pg');
 
+// Setup koneksi ke Neon Tech
 const pool = new Pool({ 
     connectionString: config.DATABASE_URL 
 });
 
+// Pasang Adapter
 const adapter = new PrismaPg(pool);
 
+// Inisialisasi Prisma
 const prisma = new PrismaClient({ 
     adapter 
 });
