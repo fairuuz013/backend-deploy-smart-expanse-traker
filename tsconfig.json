@@ -23,7 +23,7 @@
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true, // ganti jadi false
+    "exactOptionalPropertyTypes":false, // ganti jadi false
 
     // Style Options
     // "noImplicitReturns": true,
@@ -34,7 +34,8 @@
     // "noPropertyAccessFromIndexSignature": true,
 
     // Recommended Options
-    "strict": true, // ganti jadi false
+    "strict": false, // ganti jadi false
+    "noImplicitAny": false,    
     "verbatimModuleSyntax": false,
     "isolatedModules": false,
     "noUncheckedSideEffectImports": true,
